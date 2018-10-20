@@ -26,6 +26,6 @@ class UserController extends Controller
             $event->members()->save($user);
             return 1;
         }
-        else return "Error GET is empty";
+        else return 0;
     }
 }
