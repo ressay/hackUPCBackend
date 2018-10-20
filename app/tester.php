@@ -12,7 +12,7 @@ use GuzzleHttp\Client;
 
 $data = array(
     'name'      => 'myEvent',
-    'date_time'    => '2018-10-21 14:44:52',
+    'date_time'    => '1540061677',
     'max_allowed'       => '20',
     'duration' => '35',
     'description'      => 'you are gonna do well',
@@ -29,16 +29,16 @@ $options = array(
             "Accept: application/json\r\n"
     )
 );
-$url='https://damp-brook-17873.herokuapp.com/api/hostEvent';
+$url='http://localhost:8000/api/hostEvent';
 $json = json_encode($data);
 $context  = stream_context_create( $options );
 $result = file_get_contents( $url, false, $context );
 echo $result;
-//
-////API Url
-////$url = 'http://example.com/api/JSON/create';
-//
-////Initiate cURL.
+
+//API Url
+//$url = 'http://example.com/api/JSON/create';
+
+//Initiate cURL.
 //$ch = curl_init($url);
 //
 ////The JSON data.

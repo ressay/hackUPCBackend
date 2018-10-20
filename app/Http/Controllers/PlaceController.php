@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Place;
+use DateTime;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
@@ -13,8 +14,11 @@ class PlaceController extends Controller
         $places = Place::all();
         foreach ($places as $place)
         {
-            $place->comming_next = $place->events->where('date_time','>',now()->toDateTimeString())
+            $next = $place->events->where('date_time','>',now()->toDateTimeString())
                 ->first();
+            if($next)
+                $next->date_time = strtotime($next->date_time);
+            $place->comming_next = $next;
             $events = [];
             foreach($place->events as $event)
             {
@@ -42,6 +46,8 @@ class PlaceController extends Controller
                         $joined = 1;
                 }
                 $event->joined = $joined;
+
+                $event->date_time = strtotime($event->date_time);
                 unset($event->members);
             }
             return $events;
@@ -49,4 +55,5 @@ class PlaceController extends Controller
         else
             return "Error GET not set";
     }
+
 }
