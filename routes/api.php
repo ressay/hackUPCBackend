@@ -19,9 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/allEvents','EventController@getAllEvents');
 
-Route::get('/hostEvent','EventController@hostEvent');
-
-Route::get('/tryHost','EventController@tryHost');
+Route::post('/hostEvent','EventController@hostEvent');
 
 Route::get('/allPlaces','PlaceController@getAllPlaces');
 

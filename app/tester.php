@@ -10,28 +10,30 @@ use GuzzleHttp\Client;
 
 
 
-//$jsonData = array(
-//    'name'      => 'myEvent',
-//    'date_time'    => '2018-10-21 14:44:52',
-//    'max_allowed'       => '20',
-//    'duration' => '35',
-//    'description'      => 'you are gonna do well',
-//    'type' => 'Tennis',
-//    'place_id' => '1'
-//);
-////
-////$options = array(
-////    'http' => array(
-////        'method'  => 'POST',
-////        'content' => json_encode( $data ),
-////        'header'=>  "Content-Type: application/json\r\n" .
-////            "Accept: application/json\r\n"
-////    )
-////);
-//$url='http://localhost:8000/api/hostEvent?token=2';
-////$json = json_encode($data);
-////$context  = stream_context_create( $options );
-////$result = file_get_contents( $url, false, $context );
+$data = array(
+    'name'      => 'myEvent',
+    'date_time'    => '2018-10-21 14:44:52',
+    'max_allowed'       => '20',
+    'duration' => '35',
+    'description'      => 'you are gonna do well',
+    'type' => 'Tennis',
+    'place_id' => '1',
+    'token' => '1'
+);
+//
+$options = array(
+    'http' => array(
+        'method'  => 'POST',
+        'content' => json_encode( $data ),
+        'header'=>  "Content-Type: application/json\r\n" .
+            "Accept: application/json\r\n"
+    )
+);
+$url='https://damp-brook-17873.herokuapp.com/api/hostEvent';
+$json = json_encode($data);
+$context  = stream_context_create( $options );
+$result = file_get_contents( $url, false, $context );
+echo $result;
 //
 ////API Url
 ////$url = 'http://example.com/api/JSON/create';
