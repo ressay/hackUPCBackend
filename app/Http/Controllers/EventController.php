@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+include 'KMeans/Space.php';
+include "KMeans/Point.php";
+include 'KMeans/Cluster.php';
 
 use App\Event;
 use App\User;
@@ -8,6 +11,9 @@ use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use KMeans\Space;
+
+
 
 class EventController extends Controller
 {
@@ -42,5 +48,23 @@ class EventController extends Controller
 //        echo now()->timestamp;
     }
 
+    public function getRecommendation()
+    {
+        $points = [];
+        for ($i=0; $i < $n = 100; $i++) {
+            $points[] = [mt_rand(0, 100), mt_rand(0, 100)];
+        }
+
+        $space = new Space(2);
+
+        foreach ($points as $i => $coordinates) {
+            $space->addPoint($coordinates);
+//            printf("\r%.2f%%", ($i / $n) * 100);
+        }
+        $clusters = $space->solve(3,Space::SEED_DEFAULT);
+
+        foreach ($clusters as $i => $cluster)
+            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
+    }
 
 }

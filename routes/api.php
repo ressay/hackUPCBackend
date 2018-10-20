@@ -21,6 +21,8 @@ Route::get('/allEvents','EventController@getAllEvents');
 
 Route::post('/hostEvent','EventController@hostEvent');
 
+Route::get('/recommend','EventController@getRecommendation');
+
 Route::get('/allPlaces','PlaceController@getAllPlaces');
 
 Route::get('/placeEvents','PlaceController@getEvents');
@@ -28,3 +30,4 @@ Route::get('/placeEvents','PlaceController@getEvents');
 Route::get('/generateToken','UserController@generateToken');
 
 Route::get('/joinEvent','UserController@joinEvent');
+

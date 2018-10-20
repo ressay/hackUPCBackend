@@ -14,11 +14,18 @@ class PlaceController extends Controller
         $places = Place::all();
         foreach ($places as $place)
         {
+            $token = $_GET['token'];
             $next = $place->events->where('date_time','>',now()->toDateTimeString())
                 ->first();
             if($next) {
                 $next->date_time = strtotime($next->date_time);
                 $next->membersCount = count($next->members);
+                $joined = 0;
+                foreach ($next->members as $user) {
+                    if($token == $user->id)
+                        $joined = 1;
+                }
+                $next->joined = $joined;
                 unset($next->members);
             }
             $place->comming_next = $next;
