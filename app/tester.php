@@ -11,13 +11,13 @@ use GuzzleHttp\Client;
 
 
 $data = array(
-    'name'      => 'myEvent',
-    'date_time'    => '1540061677',
-    'max_allowed'       => '20',
-    'duration' => '35',
+    'name'      => 'event again',
+    'date_time'    => '1540091677',
+    'max_allowed'       => '12',
+    'duration' => '60',
     'description'      => 'you are gonna do well',
-    'type' => 'Tennis',
-    'place_id' => '1',
+    'type' => 'Football',
+    'place_id' => '2',
     'token' => '1'
 );
 //
@@ -29,7 +29,7 @@ $options = array(
             "Accept: application/json\r\n"
     )
 );
-$url='http://localhost:8000/api/hostEvent';
+$url='https://damp-brook-17873.herokuapp.com/api/hostEvent';
 $json = json_encode($data);
 $context  = stream_context_create( $options );
 $result = file_get_contents( $url, false, $context );

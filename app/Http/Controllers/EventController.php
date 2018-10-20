@@ -16,6 +16,8 @@ class EventController extends Controller
         $events = Event::all();
         foreach ($events as $event) {
             $event->date_time = strtotime($event->date_time);
+            $event->membersCount = count($event->members);
+            unset($event->members);
         }
         return $events;
     }

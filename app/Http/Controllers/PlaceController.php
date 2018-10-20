@@ -16,8 +16,11 @@ class PlaceController extends Controller
         {
             $next = $place->events->where('date_time','>',now()->toDateTimeString())
                 ->first();
-            if($next)
+            if($next) {
                 $next->date_time = strtotime($next->date_time);
+                $next->membersCount = count($next->members);
+                unset($next->members);
+            }
             $place->comming_next = $next;
             $events = [];
             foreach($place->events as $event)
@@ -46,8 +49,8 @@ class PlaceController extends Controller
                         $joined = 1;
                 }
                 $event->joined = $joined;
-
                 $event->date_time = strtotime($event->date_time);
+                $event->membersCount = count($event->members);
                 unset($event->members);
             }
             return $events;
