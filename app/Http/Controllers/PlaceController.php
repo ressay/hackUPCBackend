@@ -29,6 +29,7 @@ class PlaceController extends Controller
                 unset($next->members);
             }
             $place->comming_next = $next;
+            $place->types = explode(',',$place->types);
             $events = [];
             foreach($place->events as $event)
             {
