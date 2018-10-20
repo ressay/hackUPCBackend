@@ -12,12 +12,24 @@ class PlaceController extends Controller
     public function getAllPlaces()
     {
         $places = Place::all();
+        date_default_timezone_set('Europe/Paris');
         foreach ($places as $place)
         {
             $token = $_GET['token'];
-            $next = $place->events->where('date_time','>',now()->toDateTimeString())
-                ->first();
+            $date = date("Y-m-d H:i:s");
+            $next = null;
+            foreach ($place->events as $event) {
+                $timestamp = strtotime($event->date_time);
+                if($timestamp > strtotime($date)-$event->duration*60)
+                {
+                    $next = $event;
+                    break;
+                }
+            }
+
+
             if($next) {
+                $next->currentTime = date("Y-m-d H:i:s");
                 $next->date_time = strtotime($next->date_time);
                 $next->membersCount = count($next->members);
                 $joined = 0;

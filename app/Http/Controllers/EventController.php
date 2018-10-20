@@ -17,6 +17,12 @@ use KMeans\Space;
 
 class EventController extends Controller
 {
+    static $EventsTypes = ['volleyball' => 0,
+        'table tennis' => 1,
+        'tennis' => 2,
+        'football' => 3,
+        'basketball' => 4,
+        'frisbee' => 5];
     public function getAllEvents()
     {
         $events = Event::all();
@@ -50,21 +56,23 @@ class EventController extends Controller
 
     public function getRecommendation()
     {
-        $points = [];
-        for ($i=0; $i < $n = 100; $i++) {
-            $points[] = [mt_rand(0, 100), mt_rand(0, 100)];
-        }
-
-        $space = new Space(2);
-
-        foreach ($points as $i => $coordinates) {
-            $space->addPoint($coordinates);
-//            printf("\r%.2f%%", ($i / $n) * 100);
-        }
-        $clusters = $space->solve(3,Space::SEED_DEFAULT);
-
-        foreach ($clusters as $i => $cluster)
-            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
+//        $points = [];
+//        for ($i=0; $i < $n = 100; $i++) {
+//            $points[] = [mt_rand(0, 100), mt_rand(0, 100)];
+//        }
+//
+//        $space = new Space(2);
+//
+//        foreach ($points as $i => $coordinates) {
+//            $space->addPoint($coordinates);
+////            printf("\r%.2f%%", ($i / $n) * 100);
+//        }
+//        $clusters = $space->solve(3,Space::SEED_DEFAULT);
+//
+//        foreach ($clusters as $i => $cluster)
+//            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
+        $users = User::all();
+        return $users[0]->eventsJoined;
     }
 
 }

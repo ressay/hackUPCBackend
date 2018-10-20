@@ -28,4 +28,21 @@ class UserController extends Controller
         }
         else return 0;
     }
+
+    static public function userClassificationArray($user)
+    {
+        $eventsAttended = $user->eventsJoined;
+        $et = EventController::$EventsTypes;
+        $typesSize = count($et);
+        // typeOfEvent, day, distance
+        $type = array_fill(0,$typesSize,0);
+        $day = array_fill(0,7,0);
+        $distance = array_fill(0,1,0);
+
+        foreach ($eventsAttended as $event) {
+            $type[$et[$event->type]]++;
+            $day[date("N", strtotime($event->date_time))]++;
+
+        }
+    }
 }
