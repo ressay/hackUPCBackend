@@ -18,10 +18,6 @@ class PlaceController extends Controller
             return $places;
         }
         $places = Place::all();
-        $eventsToStore = Event::all();
-        foreach ($eventsToStore as $item) {
-            $mem = $item->members;
-        }
         date_default_timezone_set('Europe/Paris');
         foreach ($places as $place)
         {
@@ -66,8 +62,8 @@ class PlaceController extends Controller
 
         $settings = json_encode($places);
         file_put_contents( 'places.txt', $settings);
-        $settings = json_encode($eventsToStore);
-        file_put_contents( 'events.txt', $settings);
+//        $settings = json_encode($eventsToStore);
+//        file_put_contents( 'events.txt', $settings);
         return $places;
     }
 
@@ -77,17 +73,18 @@ class PlaceController extends Controller
         {
             $id = $_GET['id'];
             $token = $_GET['token'];
-            if(file_exists('places.txt')) {
-                $text = file_get_contents('events.txt');
-                $Events = json_decode($text);
-                $allEvents = [];
-                foreach ($Events as $event) {
-                    if($event->place_id == $id)
-                        $allEvents[] = $event;
-                }
-            }
-            else
+//            if(file_exists('places.txt')) {
+//                $text = file_get_contents('events.txt');
+//                $Events = json_decode($text);
+//                $allEvents = [];
+//                foreach ($Events as $event) {
+//                    if($event->place_id == $id)
+//                        $allEvents[] = $event;
+//                }
+//            }
+//            else
             {
+
                 $place = Place::find($id);
                 $allEvents = $place->events;
             }
