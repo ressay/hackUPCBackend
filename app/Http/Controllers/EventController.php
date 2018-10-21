@@ -62,12 +62,13 @@ class EventController extends Controller
 
         $points = [];
         $ids = [];
-        foreach ($users as $user) {
-            $points[] = UserController::userClassificationArray($user);
-            $ids[] = $user->id;
-            var_dump($points[count($points)-1]);
-            echo '<BR>';
-        }
+        echo "yeah!";
+//        foreach ($users as $user) {
+//            $points[] = UserController::userClassificationArray($user);
+//            $ids[] = $user->id;
+//            var_dump($points[count($points)-1]);
+//            echo '<BR>';
+//        }
 
 //        $space = new Space(count($points[0]));
 //        foreach ($points as $i => $point) {
