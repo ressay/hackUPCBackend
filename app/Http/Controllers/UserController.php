@@ -23,6 +23,12 @@ class UserController extends Controller
             $event_id = $_GET['event_id'];
             $event = Event::find($event_id);
             $user = User::find($token);
+            if(count($event->members) == $event->max_allowed)
+                return 0;
+            foreach ($event->members as $member) {
+                if($member->id == $token)
+                    return 0;
+            }
             $event->members()->save($user);
             return 1;
         }
