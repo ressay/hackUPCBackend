@@ -39,7 +39,9 @@ class UserController extends Controller
 
     static public function userClassificationArray($user)
     {
+        echo "something<BR>";
         $eventsAttended = $user->eventsJoined;
+        echo "something else<BR>";
         $et = EventController::$EventsTypes;
         $typesSize = count($et);
         // typeOfEvent, day, distance

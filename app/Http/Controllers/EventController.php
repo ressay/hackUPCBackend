@@ -64,7 +64,7 @@ class EventController extends Controller
         $ids = [];
         echo "yeah!";
         foreach ($users as $user) {
-//            $points[] = UserController::userClassificationArray($user);
+            $points[] = UserController::userClassificationArray($user);
             $ids[] = $user->id;
 //            var_dump($points[count($points)-1]);
             echo "hiiii";
