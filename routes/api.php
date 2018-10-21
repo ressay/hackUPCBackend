@@ -31,3 +31,5 @@ Route::get('/generateToken','UserController@generateToken');
 
 Route::get('/joinEvent','UserController@joinEvent');
 
+Route::get('/randomize','DataBaseFiller@randomJoin');
+

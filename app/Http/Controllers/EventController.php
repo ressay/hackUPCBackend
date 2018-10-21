@@ -72,7 +72,20 @@ class EventController extends Controller
 //        foreach ($clusters as $i => $cluster)
 //            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
         $users = User::all();
-        return $users[0]->eventsJoined;
+        $points = [];
+        foreach ($users as $user) {
+            $points[] = UserController::userClassificationArray($user);
+            var_dump($points[count($points)-1]);
+            echo '<BR>';
+        }
+        $space = new Space(count($points[0]));
+        foreach ($points as $point) {
+            $space->addPoint($point);
+        }
+        $clusters = $space->solve(2,Space::SEED_DEFAULT);
+        foreach ($clusters as $i => $cluster)
+            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
+//        return $users[0]->eventsJoined;
     }
 
 }

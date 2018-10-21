@@ -29,6 +29,8 @@ class UserController extends Controller
         else return 0;
     }
 
+
+
     static public function userClassificationArray($user)
     {
         $eventsAttended = $user->eventsJoined;
@@ -41,8 +43,8 @@ class UserController extends Controller
 
         foreach ($eventsAttended as $event) {
             $type[$et[$event->type]]++;
-            $day[date("N", strtotime($event->date_time))]++;
-
+            $day[date("N", strtotime($event->date_time))-1]++;
         }
+        return array_merge($type,$day);
     }
 }
