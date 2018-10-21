@@ -93,6 +93,7 @@ class EventController extends Controller
             if($recomCluster != null)
                 break;
         }
+        $eventsCount = [];
         foreach ($recomCluster as $point) {
             $us = $space[$point];
             foreach ($users as $user) {
@@ -101,9 +102,19 @@ class EventController extends Controller
                     break;
                 }
             }
-            var_dump(UserController::userClassificationArray($us));
-            echo "<BR>";
+            $usEvents = $us->events;
+            foreach ($usEvents as $usEvent) {
+                if(array_key_exists($usEvent->id,$eventsCount))
+                    $eventsCount[$usEvent->id]++;
+                else {
+                    $timestamp = strtotime($usEvent->date_time);
+                    if ($timestamp > strtotime(date("Y-m-d H:i:s")) - $usEvent->duration * 60)
+                        $eventsCount[$usEvent->id] = 1;
+                        }
+            }
+
         }
+        var_dump($eventsCount);
 //            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
 
 
