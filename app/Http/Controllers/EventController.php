@@ -83,7 +83,7 @@ class EventController extends Controller
         foreach ($points as $i => $point) {
             $space->addPoint($point,$ids[$i]);
         }
-        $clusters = $space->solve(10,Space::SEED_DEFAULT);
+        $clusters = $space->solve(10,Space::SEED_DASV);
         $recomCluster = null;
         foreach ($clusters as $i => $cluster)
         {
