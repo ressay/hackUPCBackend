@@ -48,6 +48,7 @@ class UserController extends Controller
         $type = array_fill(0,$typesSize,0);
         $day = array_fill(0,7,0);
         echo "something 3<BR>";
+        var_dump($et);
         foreach ($eventsAttended as $event) {
             if(!array_key_exists($event->type,$et))
                 echo "error is here:: ".$event->type;
