@@ -11,7 +11,7 @@ class DataBaseFiller extends Controller
 {
     public function createRandomUsers()
     {
-        for($i=0;$i<100;$i++)
+        for($i=0;$i<24;$i++)
         {
             $user = new User([]);
             $user->save();
