@@ -83,7 +83,7 @@ class EventController extends Controller
         foreach ($points as $i => $point) {
             $space->addPoint($point,$ids[$i]);
         }
-        $clusters = $space->solve(4,Space::SEED_DEFAULT);
+        $clusters = $space->solve(10,Space::SEED_DEFAULT);
         $recomCluster = null;
         foreach ($clusters as $i => $cluster)
         {
@@ -97,7 +97,7 @@ class EventController extends Controller
                 break;
         }
         $eventsCount = [];
-        $attendedEv = $toRecom->events;
+        $attendedEv = $toRecom->eventsJoined;
         foreach ($recomCluster as $point) {
             $us = $space[$point];
             if($us == $toRecom->id)
