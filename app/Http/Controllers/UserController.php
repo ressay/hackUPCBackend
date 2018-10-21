@@ -51,7 +51,7 @@ class UserController extends Controller
         var_dump($et);
         foreach ($eventsAttended as $event) {
             if(!array_key_exists($event->type,$et))
-                echo "error is here:: ".$event->type;
+                echo "error is here:: ".$event->type."ya";
             $type[$et[$event->type]]++;
             if(!array_key_exists(date("N", strtotime($event->date_time))-1,$day))
                 echo "error is here:: ".date("N", strtotime($event->date_time));
