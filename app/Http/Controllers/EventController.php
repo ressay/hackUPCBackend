@@ -134,7 +134,14 @@ class EventController extends Controller
             }
 
         }
-        return $eventsCount;
+        arsort($eventsCount);
+        $events = [];
+        foreach ($eventsCount as $evId => $score) {
+            $ev = Event::find($evId);
+            $ev->score = $score;
+            $events[] = $ev;
+        }
+        return $events;
 //            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
 
 
