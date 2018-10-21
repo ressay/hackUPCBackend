@@ -48,11 +48,12 @@ class UserController extends Controller
         $type = array_fill(0,$typesSize,0);
         $day = array_fill(0,7,0);
         $distance = array_fill(0,1,0);
-
+        echo "something 3<BR>";
         foreach ($eventsAttended as $event) {
             $type[$et[$event->type]]++;
             $day[date("N", strtotime($event->date_time))-1]++;
         }
+        echo "something 4<BR>";
         return array_merge($type,$day);
     }
 }
