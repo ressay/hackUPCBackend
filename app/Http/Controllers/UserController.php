@@ -64,6 +64,14 @@ class UserController extends Controller
 //                echo "error is here:: ".date("N", strtotime($event->date_time));
             $day[date("N", strtotime($event->date_time))-1]++;
         }
+        if(count($eventsAttended)) {
+            foreach ($type as $i => $item) {
+                $type[$i] = $item / count($eventsAttended);
+            }
+            foreach ($day as $i => $item) {
+                $day[$i] = $item / count($eventsAttended);
+            }
+        }
 //        echo "something 4<BR>";
         return array_merge($type,$day);
     }

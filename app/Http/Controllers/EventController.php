@@ -139,6 +139,7 @@ class EventController extends Controller
         foreach ($eventsCount as $evId => $score) {
             $ev = Event::find($evId);
             $ev->score = $score;
+            $ev->date_time = strtotime($ev->date_time);
             $events[] = $ev;
         }
         return $events;
