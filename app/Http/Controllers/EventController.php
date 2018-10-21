@@ -83,7 +83,7 @@ class EventController extends Controller
         foreach ($points as $i => $point) {
             $space->addPoint($point,$ids[$i]);
         }
-        $clusters = $space->solve(5,Space::SEED_DEFAULT);
+        $clusters = $space->solve(4,Space::SEED_DEFAULT);
         $recomCluster = null;
         foreach ($clusters as $i => $cluster)
         {
@@ -108,8 +108,11 @@ class EventController extends Controller
                     break;
                 }
             }
-            $usEvents = $us->events;
+//            echo "<BR>id: ".$us->id.": ";
+
+            $usEvents = $us->eventsJoined;
             foreach ($usEvents as $usEvent) {
+//                echo " ".$usEvent->id." ";
                 $exists = false;
                 foreach ($attendedEv as $attende) {
                     if($attende->id == $usEvent->id)
@@ -119,7 +122,7 @@ class EventController extends Controller
                     }
                 }
                 if($exists) continue;
-                echo "entered ".$usEvent->id."<BR>";
+//                echo "entered ".$usEvent->id."<BR>";
                 if(array_key_exists($usEvent->id,$eventsCount))
                     $eventsCount[$usEvent->id]++;
                 else {
@@ -131,7 +134,7 @@ class EventController extends Controller
             }
 
         }
-        var_dump($eventsCount);
+        return $eventsCount;
 //            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
 
 
