@@ -72,7 +72,16 @@ class PlaceController extends Controller
             $id = $_GET['id'];
             $token = $_GET['token'];
             $place = Place::find($id);
-            $events = $place->events;
+            $futureEvents = [];
+            $date = date("Y-m-d H:i:s");
+            foreach ($place->events as $event) {
+                $timestamp = strtotime($event->date_time);
+                if($timestamp > strtotime($date)-$event->duration*60)
+                {
+                    $futureEvents[] = $event;
+                }
+            }
+            $events = $futureEvents;
             foreach ($events as $event) {
                 $joined = 0;
                 foreach ($event->members as $user) {
