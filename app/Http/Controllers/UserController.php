@@ -47,10 +47,13 @@ class UserController extends Controller
         // typeOfEvent, day, distance
         $type = array_fill(0,$typesSize,0);
         $day = array_fill(0,7,0);
-        $distance = array_fill(0,1,0);
         echo "something 3<BR>";
         foreach ($eventsAttended as $event) {
+            if(!array_key_exists($event->type,$et))
+                echo "error is here:: ".$event->type;
             $type[$et[$event->type]]++;
+            if(!array_key_exists(date("N", strtotime($event->date_time))-1,$day))
+                echo "error is here:: ".date("N", strtotime($event->date_time));
             $day[date("N", strtotime($event->date_time))-1]++;
         }
         echo "something 4<BR>";
