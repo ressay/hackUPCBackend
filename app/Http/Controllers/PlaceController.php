@@ -28,7 +28,6 @@ class PlaceController extends Controller
                     $futureEvents[] = $event;
                     if($next == null)
                         $next = $event;
-                    break;
                 }
             }
 

@@ -26,8 +26,10 @@ class UserController extends Controller
             if(count($event->members) == $event->max_allowed)
                 return 0;
             foreach ($event->members as $member) {
-                if($member->id == $token)
-                    return 0;
+                if($member->id == $token) {
+                    $event->members()->detach($user);
+                    return 2;
+                }
             }
             $event->members()->save($user);
             return 1;
