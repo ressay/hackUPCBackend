@@ -6,26 +6,31 @@ use App\Event;
 use App\Place;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
     public function getAllPlaces()
     {
+//        $places = DB::table('places')->limit(10);
         $places = Place::all();
+        $limit = 20;
         date_default_timezone_set('Europe/Paris');
         foreach ($places as $place)
         {
+            if($limit-- <= 0)
+                break;
             $token = $_GET['token'];
             $date = date("Y-m-d H:i:s");
             $next = null;
-//            foreach ($place->events as $event) {
-//                $timestamp = strtotime($event->date_time);
-//                if($timestamp > strtotime($date)-$event->duration*60)
-//                {
-//                    $next = $event;
-//                    break;
-//                }
-//            }
+            foreach ($place->events as $event) {
+                $timestamp = strtotime($event->date_time);
+                if($timestamp > strtotime($date)-$event->duration*60)
+                {
+                    $next = $event;
+                    break;
+                }
+            }
 
 
             if($next) {
