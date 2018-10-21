@@ -12,7 +12,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use KMeans\Space;
-
+use Mockery\Exception;
 
 
 class EventController extends Controller
@@ -50,6 +50,8 @@ class EventController extends Controller
         $event->save();
         $user = User::find($id_host);
         $event->members()->save($user);
+        unset($_SERVER['places']);
+        return json_encode([0 => true]);
 
 //        echo now()->timestamp;
     }
@@ -80,7 +82,7 @@ class EventController extends Controller
         foreach ($points as $i => $point) {
             $space->addPoint($point,$ids[$i]);
         }
-        $clusters = $space->solve(10,Space::SEED_DEFAULT);
+        $clusters = $space->solve(5,Space::SEED_DEFAULT);
         $recomCluster = null;
         foreach ($clusters as $i => $cluster)
         {
@@ -94,8 +96,11 @@ class EventController extends Controller
                 break;
         }
         $eventsCount = [];
+        $attendedEv = $toRecom->events;
         foreach ($recomCluster as $point) {
             $us = $space[$point];
+            if($us == $toRecom->id)
+                continue;
             foreach ($users as $user) {
                 if($user->id == $us) {
                     $us = $user;
@@ -104,13 +109,24 @@ class EventController extends Controller
             }
             $usEvents = $us->events;
             foreach ($usEvents as $usEvent) {
+                $exists = false;
+                foreach ($attendedEv as $attende) {
+                    if($attende->id == $usEvent->id)
+                    {
+                        $exists = true;
+                        break;
+                    }
+                }
+                if($exists) continue;
+                echo "entered ".$usEvent->id."<BR>";
                 if(array_key_exists($usEvent->id,$eventsCount))
                     $eventsCount[$usEvent->id]++;
                 else {
+
                     $timestamp = strtotime($usEvent->date_time);
                     if ($timestamp > strtotime(date("Y-m-d H:i:s")) - $usEvent->duration * 60)
                         $eventsCount[$usEvent->id] = 1;
-                        }
+                }
             }
 
         }

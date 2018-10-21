@@ -16,7 +16,7 @@ $data = array(
     'max_allowed'       => '12',
     'duration' => '60',
     'description'      => 'you are gonna do well',
-    'type' => 'Football',
+    'type' => 'football',
     'place_id' => '2',
     'token' => '1'
 );
@@ -29,7 +29,7 @@ $options = array(
             "Accept: application/json\r\n"
     )
 );
-$url='https://damp-brook-17873.herokuapp.com/api/hostEvent';
+$url='http://localhost:8000/api/hostEvent';
 $json = json_encode($data);
 $context  = stream_context_create( $options );
 $result = file_get_contents( $url, false, $context );

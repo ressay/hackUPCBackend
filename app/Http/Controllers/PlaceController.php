@@ -12,6 +12,8 @@ class PlaceController extends Controller
 {
     public function getAllPlaces()
     {
+        if(isset($_SERVER['places']))
+             return $_SERVER['places'];
         $places = Place::all();
         date_default_timezone_set('Europe/Paris');
         foreach ($places as $place)
@@ -54,7 +56,7 @@ class PlaceController extends Controller
             unset($place->events);
             $place->events = $events;
         }
-
+        $_SERVER['places'] = $places;
         return $places;
     }
 

@@ -11,7 +11,7 @@ class DataBaseFiller extends Controller
 {
     public function createRandomUsers()
     {
-        for($i=0;$i<24;$i++)
+        for($i=0;$i<100;$i++)
         {
             $user = new User([]);
             $user->save();
@@ -54,8 +54,6 @@ class DataBaseFiller extends Controller
                 continue;
             $toJoin = mt_rand(0,$event->max_allowed - count($members));
             foreach ($users as $i => $user) {
-                if($i < 34)
-                    continue;
                 $in = false;
                 foreach ($members as $member) {
                     if($member->id == $user->id)
