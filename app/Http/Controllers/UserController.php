@@ -39,15 +39,15 @@ class UserController extends Controller
 
     static public function userClassificationArray($user)
     {
-        echo "something<BR>";
+//        echo "something<BR>";
         $eventsAttended = $user->eventsJoined;
-        echo "something else<BR>";
+//        echo "something else<BR>";
         $et = EventController::$EventsTypes;
         $typesSize = count($et);
         // typeOfEvent, day, distance
         $type = array_fill(0,$typesSize,0);
         $day = array_fill(0,7,0);
-        echo "something 3<BR>";
+//        echo "something 3<BR>";
         var_dump($et);
         foreach ($eventsAttended as $event) {
             if(!array_key_exists($event->type,$et))
@@ -57,7 +57,7 @@ class UserController extends Controller
                 echo "error is here:: ".date("N", strtotime($event->date_time));
             $day[date("N", strtotime($event->date_time))-1]++;
         }
-        echo "something 4<BR>";
+//        echo "something 4<BR>";
         return array_merge($type,$day);
     }
 }
