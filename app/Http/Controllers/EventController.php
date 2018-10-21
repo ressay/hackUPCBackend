@@ -65,31 +65,32 @@ class EventController extends Controller
         foreach ($users as $user) {
             $points[] = UserController::userClassificationArray($user);
             $ids[] = $user->id;
-//            var_dump($points[count($points)-1]);
-//            echo '<BR>';
+            var_dump($points[count($points)-1]);
+            echo '<BR>';
         }
-        $space = new Space(count($points[0]));
-        foreach ($points as $i => $point) {
-            $space->addPoint($point,$ids[$i]);
-        }
-        $clusters = $space->solve(10,Space::SEED_DEFAULT);
-        $recomCluster = null;
-        foreach ($clusters as $i => $cluster)
-        {
-            foreach ($cluster as $point) {
-                if($space[$point] == $toRecom->id) {
-                    $recomCluster = $cluster;
-                    break;
-                }
-            }
-            if($recomCluster != null)
-                break;
-        }
-        foreach ($recomCluster as $point) {
-            $us = User::find($space[$point]);
-            var_dump(UserController::userClassificationArray($us));
-            echo "<BR>";
-        }
+
+//        $space = new Space(count($points[0]));
+//        foreach ($points as $i => $point) {
+//            $space->addPoint($point,$ids[$i]);
+//        }
+//        $clusters = $space->solve(10,Space::SEED_DEFAULT);
+//        $recomCluster = null;
+//        foreach ($clusters as $i => $cluster)
+//        {
+//            foreach ($cluster as $point) {
+//                if($space[$point] == $toRecom->id) {
+//                    $recomCluster = $cluster;
+//                    break;
+//                }
+//            }
+//            if($recomCluster != null)
+//                break;
+//        }
+//        foreach ($recomCluster as $point) {
+//            $us = User::find($space[$point]);
+//            var_dump(UserController::userClassificationArray($us));
+//            echo "<BR>";
+//        }
 //            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
 
 
