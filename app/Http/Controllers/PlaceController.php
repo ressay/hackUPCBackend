@@ -16,45 +16,45 @@ class PlaceController extends Controller
         $places = Place::all();
         $limit = 20;
         date_default_timezone_set('Europe/Paris');
-        foreach ($places as $place)
-        {
-            if($limit-- <= 0)
-                break;
-            $token = $_GET['token'];
-            $date = date("Y-m-d H:i:s");
-            $next = null;
-            foreach ($place->events as $event) {
-                $timestamp = strtotime($event->date_time);
-                if($timestamp > strtotime($date)-$event->duration*60)
-                {
-                    $next = $event;
-                    break;
-                }
-            }
-
-
-            if($next) {
-                $next->currentTime = date("Y-m-d H:i:s");
-                $next->date_time = strtotime($next->date_time);
-                $next->membersCount = count($next->members);
-                $joined = 0;
-                foreach ($next->members as $user) {
-                    if($token == $user->id)
-                        $joined = 1;
-                }
-                $next->joined = $joined;
-                unset($next->members);
-            }
-            $place->comming_next = $next;
-            $place->types = explode(',',$place->types);
-            $events = [];
-            foreach($place->events as $event)
-            {
-                array_push($events,$event->id);
-            }
-            unset($place->events);
-            $place->events = $events;
-        }
+//        foreach ($places as $place)
+//        {
+//            if($limit-- <= 0)
+//                break;
+//            $token = $_GET['token'];
+//            $date = date("Y-m-d H:i:s");
+//            $next = null;
+//            foreach ($place->events as $event) {
+//                $timestamp = strtotime($event->date_time);
+//                if($timestamp > strtotime($date)-$event->duration*60)
+//                {
+//                    $next = $event;
+//                    break;
+//                }
+//            }
+//
+//
+//            if($next) {
+//                $next->currentTime = date("Y-m-d H:i:s");
+//                $next->date_time = strtotime($next->date_time);
+//                $next->membersCount = count($next->members);
+//                $joined = 0;
+//                foreach ($next->members as $user) {
+//                    if($token == $user->id)
+//                        $joined = 1;
+//                }
+//                $next->joined = $joined;
+//                unset($next->members);
+//            }
+//            $place->comming_next = $next;
+//            $place->types = explode(',',$place->types);
+//            $events = [];
+//            foreach($place->events as $event)
+//            {
+//                array_push($events,$event->id);
+//            }
+//            unset($place->events);
+//            $place->events = $events;
+//        }
 
         return $places;
     }
