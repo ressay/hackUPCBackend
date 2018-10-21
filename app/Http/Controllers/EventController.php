@@ -50,7 +50,8 @@ class EventController extends Controller
         $event->save();
         $user = User::find($id_host);
         $event->members()->save($user);
-        unlink('places.txt');
+        if(file_exists('places.txt'))
+            unlink('places.txt');
         return "true";
 
 //        echo now()->timestamp;
