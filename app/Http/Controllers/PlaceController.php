@@ -12,8 +12,11 @@ class PlaceController extends Controller
 {
     public function getAllPlaces()
     {
-        if(isset($_SERVER['places']))
-             return $_SERVER['places'];
+        if(file_exists('places.txt')) {
+            $text = file_get_contents('places.txt' );
+            $places = json_decode($text);
+            return $places;
+        }
         $places = Place::all();
         date_default_timezone_set('Europe/Paris');
         foreach ($places as $place)
@@ -56,7 +59,9 @@ class PlaceController extends Controller
             unset($place->events);
             $place->events = $events;
         }
-        $_SERVER['places'] = $places;
+
+        $settings = json_encode($places);
+        file_put_contents( 'places.txt', $settings);
         return $places;
     }
 

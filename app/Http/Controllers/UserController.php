@@ -28,12 +28,12 @@ class UserController extends Controller
             foreach ($event->members as $member) {
                 if($member->id == $token) {
                     $event->members()->detach($user);
-                    unset($_SERVER['places']);
+                    unlink('places.txt');
                     return 2;
                 }
             }
             $event->members()->save($user);
-            unset($_SERVER['places']);
+            unlink('places.txt');
             return 1;
         }
         else return 0;

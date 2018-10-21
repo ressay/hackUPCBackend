@@ -50,8 +50,8 @@ class EventController extends Controller
         $event->save();
         $user = User::find($id_host);
         $event->members()->save($user);
-        unset($_SERVER['places']);
-        return json_encode([0 => true]);
+        unlink('places.txt');
+        return "true";
 
 //        echo now()->timestamp;
     }
