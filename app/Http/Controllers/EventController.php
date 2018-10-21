@@ -56,35 +56,43 @@ class EventController extends Controller
 
     public function getRecommendation()
     {
-//        $points = [];
-//        for ($i=0; $i < $n = 100; $i++) {
-//            $points[] = [mt_rand(0, 100), mt_rand(0, 100)];
-//        }
-//
-//        $space = new Space(2);
-//
-//        foreach ($points as $i => $coordinates) {
-//            $space->addPoint($coordinates);
-////            printf("\r%.2f%%", ($i / $n) * 100);
-//        }
-//        $clusters = $space->solve(3,Space::SEED_DEFAULT);
-//
-//        foreach ($clusters as $i => $cluster)
-//            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
         $users = User::all();
+        $toRecom = User::find($_GET['token']);
+
+
         $points = [];
+        $ids = [];
         foreach ($users as $user) {
             $points[] = UserController::userClassificationArray($user);
-            var_dump($points[count($points)-1]);
-            echo '<BR>';
+            $ids[] = $user->id;
+//            var_dump($points[count($points)-1]);
+//            echo '<BR>';
         }
         $space = new Space(count($points[0]));
-        foreach ($points as $point) {
-            $space->addPoint($point);
+        foreach ($points as $i => $point) {
+            $space->addPoint($point,$ids[$i]);
         }
-        $clusters = $space->solve(2,Space::SEED_DEFAULT);
+        $clusters = $space->solve(10,Space::SEED_DEFAULT);
+        $recomCluster = null;
         foreach ($clusters as $i => $cluster)
-            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
+        {
+            foreach ($cluster as $point) {
+                if($space[$point] == $toRecom->id) {
+                    $recomCluster = $cluster;
+                    break;
+                }
+            }
+            if($recomCluster != null)
+                break;
+        }
+        foreach ($recomCluster as $point) {
+            $us = User::find($space[$point]);
+            var_dump(UserController::userClassificationArray($us));
+            echo "<BR>";
+        }
+//            printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
+
+
 //        return $users[0]->eventsJoined;
     }
 

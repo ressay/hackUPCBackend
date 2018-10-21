@@ -54,6 +54,8 @@ class DataBaseFiller extends Controller
                 continue;
             $toJoin = mt_rand(0,$event->max_allowed - count($members));
             foreach ($users as $i => $user) {
+                if($i < 34)
+                    continue;
                 $in = false;
                 foreach ($members as $member) {
                     if($member->id == $user->id)
