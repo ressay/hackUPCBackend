@@ -20,11 +20,14 @@ class PlaceController extends Controller
             $token = $_GET['token'];
             $date = date("Y-m-d H:i:s");
             $next = null;
+            $futureEvents = [];
             foreach ($place->events as $event) {
                 $timestamp = strtotime($event->date_time);
                 if($timestamp > strtotime($date)-$event->duration*60)
                 {
-                    $next = $event;
+                    $futureEvents[] = $event;
+                    if($next == null)
+                        $next = $event;
                     break;
                 }
             }
@@ -45,7 +48,7 @@ class PlaceController extends Controller
             $place->comming_next = $next;
             $place->types = explode(',',$place->types);
             $events = [];
-            foreach($place->events as $event)
+            foreach($futureEvents as $event)
             {
                 array_push($events,$event->id);
             }

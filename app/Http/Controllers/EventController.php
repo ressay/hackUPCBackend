@@ -57,8 +57,13 @@ class EventController extends Controller
     public function getRecommendation()
     {
         $users = User::all();
-        $toRecom = User::find($_GET['token']);
-
+        $toRecom = $_GET['token'];
+        foreach ($users as $user) {
+            if($user->id == $toRecom) {
+                $toRecom = $user;
+                break;
+            }
+        }
 
         $points = [];
         $ids = [];
@@ -89,7 +94,13 @@ class EventController extends Controller
                 break;
         }
         foreach ($recomCluster as $point) {
-            $us = User::find($space[$point]);
+            $us = $space[$point];
+            foreach ($users as $user) {
+                if($user->id == $us) {
+                    $us = $user;
+                    break;
+                }
+            }
             var_dump(UserController::userClassificationArray($us));
             echo "<BR>";
         }
